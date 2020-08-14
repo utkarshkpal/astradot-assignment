@@ -1,12 +1,12 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import C1 from "./Home";
+import Home from "./Home";
 
 function App() {
   return (
     <div className="App">
-      <C1 timeRange={"time_range"} />
+      <Home />
     </div>
   );
 }
