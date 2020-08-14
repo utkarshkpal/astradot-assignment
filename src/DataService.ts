@@ -7,7 +7,7 @@ const METRIC_ENDPOINT = "/metrics";
 const API_ENDPOINT: string =
   process.env.NODE_ENV === "development" ? DEV_SVR : PROD_SVR;
 
-export default async function getData(query: string = "") {
+const getData = async (query: string = ""): Promise<any[]> => {
   const url: string = `${API_ENDPOINT}/${METRIC_ENDPOINT}`;
   try {
     const { data } = await axios.post(url, { query });
@@ -16,4 +16,6 @@ export default async function getData(query: string = "") {
     console.log(error);
     return [];
   }
-}
+};
+
+export default getData;

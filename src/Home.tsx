@@ -8,16 +8,27 @@ function genQuery(timeRange: string, componentName: string): string {
 function Loading() {
   return <h2>Loading...</h2>;
 }
-interface IProps {
-  timeRange: string;
-}
 
-function useCustomFetch(refreshInterval_Secs: number, query: string) {
-  const [data, setData] = useState(null);
+type IProps = {
+  timeRange: string;
+};
+
+type ResponseData = null | any[];
+
+const useCustomFetch = (
+  refreshInterval_Secs: number,
+  query: string
+): ResponseData => {
+  const [data, setData] = useState<ResponseData>(null);
 
   const fetchData = async () => {
-    const data = await getData(query);
-    setData(data);
+    try {
+      const data = await getData(query);
+      setData(data);
+    } catch (error) {
+      console.log(error);
+      setData([]);
+    }
   };
 
   useEffect(() => {
@@ -29,7 +40,7 @@ function useCustomFetch(refreshInterval_Secs: number, query: string) {
   }, []);
 
   return data;
-}
+};
 
 function C1(props: IProps) {
   const refreshInterval_Secs = 60;
@@ -48,14 +59,16 @@ function C2(props: IProps) {
   return <>{data === null ? <Loading /> : data}</>;
 }
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
     <>
       <C1 timeRange="time_range" />
       <C2 timeRange="time_range" />
     </>
   );
-}
+};
+
+export default Home;
 
 // function C3(props: IProps) {
 // const refreshInterval_Secs = 15;
